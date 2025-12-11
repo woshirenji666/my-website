@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算机网络期末复习题</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        header p {
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            border: 1px solid #eee;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            white-space: pre-line; /* 保留换行符 */
+        }
+
+        /* 选项样式 */
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .options-list li {
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            transition: background-color 0.2s;
+        }
+        
+        .options-list li:hover {
+            background-color: #e2e6ea;
+        }
+
+        /* 按钮样式 */
+        .btn-toggle {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-toggle:hover {
+            background-color: #2980b9;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 答案区域样式 */
+        .answer-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            display: none; /* 默认隐藏 */
+            border-radius: 4px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .answer-box.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .answer-label {
+            font-weight: bold;
+            color: #15803d;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .explanation {
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+        }
+
+        /* Code/Pre 样式 */
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding-bottom: 20px; }
+            h1 { font-size: 1.5rem; }
+            .card { padding: 15px; }
+            .section-title { margin-top: 30px; font-size: 1.2rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+    <!-- 内容将由 JavaScript 渲染 -->
+</div>
+
+<script>
+    // 完整的题库数据 (JSON格式)
+    const examData = {
+      "examTitle": "计算机网络期末复习题 (完整版)",
+      "sections": [
+        {
+          "name": "一、选择题",
+          "type": "choice",
+          "questions": [
+            {
+              "id": 1,
+              "question": "计算机网络中为进行数据交换而建立的规则、标准或约定的集合称为 [   ]",
+              "options": ["A. 协议", "B. 体系结构", "C. 网络协议", "D. 物理层"],
+              "answer": "C",
+              "explanation": "网络协议是计算机网络中进行数据交换而建立的规则、标准或约定的集合。"
+            },
+            {
+              "id": 2,
+              "question": "协议是计算机网络中实体之间交换数据所必须遵守的规则集合。其关键要素不包括： [   ]",
+              "options": ["A. 语法", "B. 语义", "C. 时序", "D. 加密"],
+              "answer": "D",
+              "explanation": "协议的三要素是语法、语义和时序（同步）。加密不是基本要素。"
+            },
+            {
+              "id": 3,
+              "question": "下列网络拓扑结构中，中心结点故障会导致全网瘫痪的是？ [   ]",
+              "options": ["A. 总线型", "B. 星型", "C. 环型", "D. 网状型"],
+              "answer": "B",
+              "explanation": "星型拓扑严重依赖中心节点（如交换机），一旦中心节点故障，全网通信中断。"
+            },
+            {
+              "id": 4,
+              "question": "常用的传输介质中，带宽最大、传输信号衰减最小、抗干扰能力最强的是 [   ]",
+              "options": ["A. 同轴电缆", "B. 光纤", "C. 双绞线", "D. 无线电磁波"],
+              "answer": "B",
+              "explanation": "光纤具有极高的带宽，光信号传输衰减极小且不受电磁干扰。"
+            },
+            {
+              "id": 5,
+              "question": "以下传输介质中，抗电磁干扰能力最强的是？ [   ]",
+              "options": ["A. 屏蔽双绞线", "B. 同轴电缆", "C. 多模光纤", "D. 无线电波"],
+              "answer": "C",
+              "explanation": "光纤利用光信号传输，完全不受外界电磁场干扰。"
+            },
+            {
+              "id": 6,
+              "question": "将模拟信号转换成数字信号的过程称为？ [   ]",
+              "options": ["A. 调制", "B. 解调", "C. 编码", "D. 解码"],
+              "answer": "C",
+              "explanation": "通常指PCM（脉冲编码调制），包括采样、量化、编码三个步骤。"
+            },
+            {
+              "id": 7,
+              "question": "IEEE 802.3 标准规定的以太网的物理地址长度是 [   ]",
+              "options": ["A. 8bit", "B. 32bit", "C. 48bit", "D. 64bit"],
+              "answer": "C",
+              "explanation": "MAC地址长度为48位（6字节）。"
+            },
+            {
+              "id": 8,
+              "question": "802.11 在 MAC 层采用了以下选项中哪种协议？ [   ]",
+              "options": ["A. CSMA/CD", "B. CSMA/CA", "C. DQDB", "D. 令牌传递"],
+              "answer": "B",
+              "explanation": "无线局域网（WiFi）使用 CSMA/CA（载波监听多点接入/冲突避免）。"
+            },
+            {
+              "id": 9,
+              "question": "下面不属于 CSMA/CD 协议要点的是 [   ]",
+              "options": ["A. 多点接入", "B. 轮询", "C. 载波监听", "D. 冲突检测"],
+              "answer": "B",
+              "explanation": "CSMA/CD 是随机接入协议，不使用轮询机制。"
+            },
+            {
+              "id": 10,
+              "question": "下面关于网桥的说法错误的是 [   ]",
+              "options": ["A. 工作在第二层", "B. 有效阻止广播风暴", "C. 可连接不同局域网", "D. 处理数据的工作会增加时延"],
+              "answer": "B",
+              "explanation": "网桥（交换机）隔离冲突域，但默认不能隔离广播域。"
+            },
+            {
+              "id": 11,
+              "question": "下面哪个选项不属于数据链路层的三个基本问题 [   ]",
+              "options": ["A. 封装成帧", "B. 透明传输", "C. 差错检测", "D. 差错纠正"],
+              "answer": "D",
+              "explanation": "三个基本问题是：封装成帧、透明传输、差错检测。"
+            },
+            {
+              "id": 12,
+              "question": "在 CSMA/CD 协议中，“CD”指的是？ [   ]",
+              "options": ["A. 载波监听", "B. 多点接入", "C. 冲突检测", "D. 冲突避免"],
+              "answer": "C",
+              "explanation": "Collision Detection，冲突检测。"
+            },
+            {
+              "id": 13,
+              "question": "数据链路层为网络层提供的主要服务是？ [   ]",
+              "options": ["A. 路由选择", "B. 端到端的可靠传输", "C. 无差错的帧传输", "D. 进程到进程的通信"],
+              "answer": "C",
+              "explanation": "链路层致力于相邻节点间的帧传输（提供无差错接收的服务，即丢弃坏帧）。"
+            },
+            {
+              "id": 14,
+              "question": "关于 OSPF 和 RIP，下列说法正确的是 [   ]",
+              "options": ["A. OSPF 和 RIP 都是静态路由", "B. OSPF 属于距离向量型路由协议，RIP 属于链路状态型路由协议", "C. OSPF 适合在小型的、动态的互联网上使用，而 RIP 适合在大型的、动态的互联网上使用", "D. OSPF 适合在大型的、动态的互联网上使用，而 RIP 适合在小型的、动态的互联网上使用"],
+              "answer": "D",
+              "explanation": "RIP是距离向量算法，限制跳数，适合小型网络；OSPF是链路状态算法，适合大型网络。"
+            },
+            {
+              "id": 15,
+              "question": "子网掩码是 255.255.0.0，那么子网 112.11.0.0 内的广播地址是 [   ]",
+              "options": ["A. 112.11.0.0", "B. 112.1.1.1", "C. 112.255.255.255", "D. 112.11.255.255"],
+              "answer": "D",
+              "explanation": "网络号112.11，主机号全为1即为广播地址：112.11.255.255。"
+            },
+            {
+              "id": 16,
+              "question": "若两台机器不在同一网段中，则其网络地址一定 [   ]",
+              "options": ["A. 不同", "B. 相同", "C. 全0", "D. 全1"],
+              "answer": "A",
+              "explanation": "不在同一网段意味着网络地址（Network ID）不同。"
+            },
+            {
+              "id": 17,
+              "question": "IP 地址为 140.111.0.0 的 B 类网络，若要切割为 9 个子网，而且都要连上 Internet，请问子网掩码可以设为 [   ]",
+              "options": ["A. 255.0.0.0", "B. 255.255.0.0", "C. 255.255.128.0", "D. 255.255.240.0"],
+              "answer": "D",
+              "explanation": "需要9个子网，至少借4位主机位（2^4=16）。B类默认/16，借4位变/20。前20位为1 => 255.255.240.0。"
+            },
+            {
+              "id": 18,
+              "question": "IP 地址 192.168.1.100/26 所在的子网广播地址是？ [   ]",
+              "options": ["A. 192.168.1.127", "B. 192.168.1.255", "C. 192.168.1.63", "D. 192.168.1.0"],
+              "answer": "A",
+              "explanation": "/26 表示块大小为64。100落在64-127段。广播地址是127。"
+            },
+            {
+              "id": 19,
+              "question": "路由器进行数据包转发的依据是？ [   ]",
+              "options": ["A. MAC 地址表", "B. 端口号", "C. IP 路由表", "D. ARP 缓存"],
+              "answer": "C",
+              "explanation": "路由器工作在网络层，根据IP路由表转发数据包。"
+            },
+            {
+              "id": 20,
+              "question": "HTTP 在 TCP 中的默认端口号是 [   ]",
+              "options": ["A. 81", "B. 80", "C. 25", "D. 70"],
+              "answer": "B",
+              "explanation": "HTTP默认端口80。"
+            },
+            {
+              "id": 21,
+              "question": "主机甲和主机乙之间建立了一个 TCP 连接...此时主机甲还可以向主机乙发送的最大字节数是 [   ]",
+              "options": ["A. 1000", "B. 2000", "C. 3000", "D. 4000"],
+              "answer": "A",
+              "explanation": "发送窗口 = min(拥塞, 接收) = 2000。已发送未确认1000。可用 = 2000 - 1000 = 1000。"
+            },
+            {
+              "id": 22,
+              "question": "进程之间通信依赖的插口地址或者套接字是指 [   ]",
+              "options": ["A. IP 地址+端口号", "B. IP 地址", "C. 端口号", "D. 端口序号"],
+              "answer": "A",
+              "explanation": "Socket = IP地址 + 端口号。"
+            },
+            {
+              "id": 23,
+              "question": "TCP 协议通过哪种机制来实现可靠传输？ [   ]",
+              "options": ["A. 广播", "B. 确认与重传", "C. 最佳路径选择", "D. 流量整形"],
+              "answer": "B",
+              "explanation": "TCP依靠ACK（确认）和超时重传机制保证可靠性。"
+            }
+          ]
+        },
+        {
+          "name": "二、填空题",
+          "type": "fill",
+          "questions": [
+            { "id": 1, "question": "按照 OSI 的体系结构划分，由低到高网络的第一层是 _____。", "answer": "物理层" },
+            { "id": 2, "question": "若码元传输速率为 2400 波特，每个码元可取 4 种有效离散值，则相应的数据传输速率为 _____。", "answer": "4800 bps" },
+            { "id": 3, "question": "设数据传输速率为 4800bps，采用 16 相相移键控调制，则调制速率为 _____ baud。", "answer": "1200" },
+            { "id": 4, "question": "双绞线中，通过将线对相互缠绕来减少 _____ 干扰。", "answer": "电磁" },
+            { "id": 5, "question": "数据传输的两种基本方式是串行传输和 _____。", "answer": "并行传输" },
+            { "id": 6, "question": "VLAN 使用的 802.1Q 帧的最大长度为 _____ 字节。", "answer": "1522" },
+            { "id": 7, "question": "数据链路层解决的三个基本问题是：封装成帧、_____ 和差错检测。", "answer": "透明传输" },
+            { "id": 8, "question": "在路由表中代表默认路由的 IP 地址是 _____。", "answer": "0.0.0.0" },
+            { "id": 9, "question": "IPSec 协议是一组协议，工作在 OSI 的 _____ 层。", "answer": "网络 (或第三)" },
+            { "id": 10, "question": "与一个 C 类 IP 地址相对应的默认子网掩码是 _____。", "answer": "255.255.255.0" },
+            { "id": 11, "question": "网络层使用的中间设备是 _____。", "answer": "路由器" },
+            { "id": 12, "question": "TCP/IP 协议簇中 “over everything” 的协议为 _____ 协议。", "answer": "IP" },
+            { "id": 13, "question": "网络层最核心的功能是 _____ 和分组转发。", "answer": "路由选择" },
+            { "id": 14, "question": "在 IP 数据报分片过程中，用于标识同一原数据报的所有分片的字段是 _____。", "answer": "标识 (Identification)" },
+            { "id": 15, "question": "IPv4 数据报首部中，用于标识数据报分片重组关系的字段是标识、标志和 _____。", "answer": "片偏移" },
+            { "id": 16, "question": "RIP 协议是一种基于 _____ 算法的内部网关协议。", "answer": "距离向量" },
+            { "id": 17, "question": "若主机甲与主机乙建立 TCP 连接...甲向乙已经发送的应用层数据的字节数为 _____。", "answer": "4000" },
+            { "id": 18, "question": "在 TCP 滑动窗口中，若 rwnd=3000，cwnd=3500，则发送端的窗口值是 _____。", "answer": "3000" },
+            { "id": 19, "question": "运输层向它上面的应用层提供 _____ 通信服务。", "answer": "端到端" },
+            { "id": 20, "question": "TCP 为应用程序提供了 _____ 服务，以解决发送方发送数据太快导致接收方来不及接收...的问题。", "answer": "流量控制" },
+            { "id": 21, "question": "UDP 协议的首部长度固定为 _____ 字节。", "answer": "8" },
+            { "id": 22, "question": "DNS 服务器的作用是 _____ 转换成 IP 地址。", "answer": "域名" },
+            { "id": 23, "question": "FTP 的客户和服务器之间要建立两个连接：数据连接和 _____ 连接。", "answer": "控制" },
+            { "id": 24, "question": "电子邮件系统中，用于在不同邮件服务器间转发邮件的协议是 _____。", "answer": "SMTP" },
+            { "id": 25, "question": "将域名转换为 IP 地址的网络服务是 _____。", "answer": "DNS (域名系统)" },
+            { "id": 26, "question": "加密后的数据被称为 _____。", "answer": "密文" },
+            { "id": 27, "question": "访问控制策略包括：基于角色的访问控制、自主访问控制和 _____。", "answer": "强制访问控制 (MAC)" },
+            { "id": 28, "question": "计算机网络上的通信面临主动攻击和 _____ 两大类威胁。", "answer": "被动攻击" },
+            { "id": 29, "question": "在公开密钥密码体制中，公钥用于加密或验证签名，公钥用于 _____ 或生成签名。", "answer": "加密" }
+          ]
+        },
+        {
+          "name": "三、简答题",
+          "type": "text",
+          "questions": [
+            {
+              "id": 1,
+              "question": "根据下图提示，请画出数据流 1010 的不归零编码、曼彻斯特编码的波形（从高电平开始）。",
+              "answer": "1. <strong>不归零编码 (NRZ)</strong>: 1(高电平), 0(低电平), 1(高电平), 0(低电平)。<br>2. <strong>曼彻斯特编码</strong>: 1(高跳低), 0(低跳高), 1(高跳低), 0(低跳高)。"
+            },
+            {
+              "id": 2,
+              "question": "某局域网有两台以太网交换机 S1 和 S2... 试填写各交换机在收到各帧后的处理动作。",
+              "answer": "<table border='1'><tr><th>发送的帧</th><th>S1处理</th><th>S2处理</th></tr><tr><td>A -> D</td><td>泛洪 (转发2,3,4)</td><td>泛洪 (转发1,2,3)</td></tr><tr><td>E -> F</td><td>泛洪 (转发1,2,3)</td><td>泛洪 (转发1,3,4)</td></tr><tr><td>D -> A</td><td>转发接口1 (A在接口1)</td><td>转发接口4 (A在接口4方向)</td></tr><tr><td>F -> E</td><td>未收到</td><td>转发接口2 (E在接口2)</td></tr></table>"
+            },
+            {
+              "id": 3,
+              "question": "考虑 RIP，路由器 A 收到 C 的路由信息，求更新后的路由表。",
+              "answer": "N1: 3, C (更新); N2: 2, C (刷新); N3: 1, F (不变); N4: 5, G (不变); N5: 7, C (新增)。"
+            },
+            {
+              "id": 4,
+              "question": "为什么要使用信道复用技术？常用的信道复用技术有哪些？",
+              "answer": "提高信道利用率。常用：FDM (频分), TDM (时分), WDM (波分), CDM (码分)。"
+            },
+            {
+              "id": 5,
+              "question": "试简单说明下列协议的作用：IP、ARP、ICMP、IGMP 和 RIP。",
+              "answer": "IP: 路由寻址; ARP: IP转MAC; ICMP: 差错报告/Ping; IGMP: 组播管理; RIP: 路由协议。"
+            },
+            {
+              "id": 6,
+              "question": "如果一台计算机要接入到因特网，那么它必须配置哪些协议参数？DHCP 协议的作用是什么？",
+              "answer": "参数：IP、掩码、网关、DNS。DHCP作用：动态自动分配这些配置。"
+            },
+            {
+              "id": 7,
+              "question": "简述 ARP（地址解析协议）的工作原理。",
+              "answer": "广播Request (谁是IP X?); 单播Reply (我是, MAC是Y); 缓存结果。"
+            },
+            {
+              "id": 8,
+              "question": "简述 HTTP 协议与 HTTPS 协议的主要区别，并解释为什么现代网站普遍采用 HTTPS 协议。",
+              "answer": "HTTPS = HTTP + SSL/TLS。加密传输，防止窃听和篡改，验证身份。"
+            },
+            {
+              "id": 9,
+              "question": "简述对称加密与非对称加密的主要区别，并各举一个算法例子。",
+              "answer": "对称：同一密钥 (AES); 非对称：公私钥对 (RSA)。"
+            }
+          ]
+        },
+        {
+          "name": "四、计算题",
+          "type": "text",
+          "questions": [
+            {
+              "id": 1,
+              "question": "CRC 校验计算：数据 101001，生成多项式 X^3+X^2+1 (1101)。\n(1) 试求应添加在数据后面的冗余码。\n(2) 若数据在传输过程中变成了 101000，数据后面的冗余码不变，问接收端能否发现数据传输过程中出现差错？为什么？\n(3) 采用 CRC 校验，数据链路层的传输是否变成了可靠的传输？为什么？",
+              "answer": "1. <strong>冗余码</strong>:\n数据为 $101001$，添加3个0（阶数为3）变为 $101001000$。用 $1101$ 进行模2除法，余数为 <strong>001</strong>。\n\n2. <strong>能否发现差错</strong>:\n接收到的数据为 $101000$，加上原来的冗余码 $001$，组合成 $101000001$。用 $1101$ 除 $101000001$，若余数不为0，则说明有错。计算可知余数不为0，因此<strong>能发现差错</strong>。\n\n3. <strong>是否可靠</strong>:\n<strong>否</strong>。CRC 只能实现“无比特差错”的传输（即丢弃有错的帧），但无法实现“无传输差错”（如帧丢失、帧重复、帧失序等），也不提供重传机制。可靠传输通常需要上层（TCP）或链路层的ARQ协议来保证。"
+            },
+            {
+              "id": 2,
+              "question": "月球到地球的距离大约为 3.9×10^5 Km，在它们之间架设一条 200Kbps 的点到点链路，信号传播速度为光速（光速为 3.0×10^8 m/s）。将一幅照片从月球传回地球所需的时间为 501.3s。试求出这幅照片占用的字节数。（要求写出计算步骤）",
+              "answer": "1. <strong>计算传播时延 (Propagation Delay)</strong>:\n$t_{prop} = \\frac{距离}{光速} = \\frac{3.9 \\times 10^8 m}{3.0 \\times 10^8 m/s} = 1.3s$\n\n2. <strong>计算发送时延 (Transmission Delay)</strong>:\n$t_{trans} = 总时间 - 传播时延 = 501.3s - 1.3s = 500s$\n\n3. <strong>计算数据量</strong>:\n数据量 = 速率 $\\times$ 发送时延\n$= 200 Kbps \\times 500s$\n$= 100,000 Kb$\n$= 100 Mb$\n\n4. <strong>转换为字节</strong>:\n字节数 = $100 \\times 10^6 bits / 8 = 12.5 MB$ (即 $12,500,000$ 字节)。"
+            },
+            {
+              "id": 3,
+              "question": "某 TCP 连接采用连续 ARQ 协议，滑动窗口大小（发送方拥塞窗口 cwnd = 接收方接收窗口 rwnd）= 4MSS（最大分段大小），MSS = 1KB = 1024 字节。发送方已发送序号范围为 1 到 4096 的所有数据段，且仅收到序号 1 到 2048 对应数据的确认（累计确认）。发送方当前可继续发送的数据量是多少字节？请写出详细计算逻辑。",
+              "answer": "1. <strong>当前窗口状态</strong>:\n题目给定 发送窗口 = $\\min(cwnd, rwnd) = 4 MSS = 4096$ 字节。\n\n2. <strong>已确认的数据</strong>:\n收到序号 1 到 2048 的确认，说明确认号 ack = 2049。滑动窗口的左边缘移动到 2049。\n\n3. <strong>发送窗口的有效范围</strong>:\n窗口范围是 $[2049, 2049 + 4096 - 1] = [2049, 6144]$。\n\n4. <strong>已发送但未确认的数据</strong>:\n发送方已发送到了 4096。这部分数据 (2049 到 4096) 占据了发送窗口的一部分。\n已用窗口 = $4096 - 2049 + 1 = 2048$ 字节。\n\n5. <strong>剩余可用发送量</strong>:\n可用窗口 = 总窗口大小 - 已用窗口\n$= 4096 - 2048 = \\mathbf{2048}$ <strong>字节</strong>。"
+            }
+          ]
+        },
+        {
+          "name": "五、应用题",
+          "type": "text",
+          "questions": [
+            {
+              "id": 1,
+              "question": "假设主机 H1 访问 Web 服务器 S 时，S 为新建的 TCP 连接分配了 20KB (K=1024) 的接收缓存，最大段 MSS=1KB。H1 建立连接时的初始序列号为 100，且持续以 MSS 大小的段向 S 发送数据，H1 的发送窗口初始值为 1KB，拥塞窗口初始值为 32KB；S 对收到的每个段进行确认，并通告新的接收窗口。\n假定 TCP 连接建立完成后，S 段接收缓存仅有数据存入而无数据取出。请回答下列问题。\n(1) 在 TCP 连接建立过程中，H1 收到的 S 发送过来的第二次握手 TCP 段的 SYN 和 ACK 标志位的值分别是多少？确认号是多少？\n(2) H1 收到的第 1 个确认段所通告的接收窗口是多少？此时 H1 的拥塞窗口变为多少？H1 的发送窗口变为多少？\n(3) 当 H1 的发送窗口等于 0 时，下一个待发送的数据段序号是多少？",
+              "answer": "<strong>(1) 第二次握手参数：</strong>\n<ul><li><strong>SYN = 1, ACK = 1</strong> (这是标准的第二次握手报文，即 SYN+ACK 包)。</li><li><strong>确认号 (ack) = 101</strong> (H1 初始 seq=100，SYN 占用 1 个序号，故期望收到 101)。</li></ul>\n<strong>(2) 收到第 1 个确认段后：</strong>\n<ul><li><strong>通告的接收窗口 (rwnd)</strong>：\nH1 发送了 1 个 MSS (1KB) 的数据。S 接收并存入缓存，但无数据取出。S 的总缓存为 20KB，已用 1KB，剩余 <strong>19KB</strong> (即 19456 字节)。</li><li><strong>H1 的拥塞窗口 (cwnd)</strong>：\n题目给定初始 cwnd=32KB。按照标准 TCP 慢启动，每收到一个 ACK，cwnd 增加 1 MSS。即 $32KB + 1KB = \\mathbf{33KB}$。\n*(注：若按题目字面意思理解为“保持初始配置”，则可能仍为 32KB，但通常考点涉及窗口增长)*。</li><li><strong>H1 的发送窗口</strong>：\n发送窗口 = $\\min(rwnd, cwnd) = \\min(19KB, 33KB) = \\mathbf{19KB}$。</li></ul>\n<strong>(3) 发送窗口为 0 时：</strong>\n<ul><li>发送窗口为 0 意味着 S 的接收缓存 (20KB) 已被填满。</li><li>H1 从序号 101 开始发送数据。</li><li>填满 20KB 需要发送 $20 \\times 1024 = 20480$ 字节。</li><li>已发送的最后一个字节序号 = $100 (初始) + 20480 = 20580$。</li><li><strong>下一个待发送的序号</strong> (即被阻塞的第一个字节) = $20580 + 1 = \\mathbf{20581}$。</li></ul>"
+            },
+            {
+              "id": 2,
+              "question": "考虑下图 TCP 报文段首部中的各字段...请填写下图中留出的序号 (1)-(5) 的空白，并用文字描述 TCP 释放连接的过程。\n(图示：TCP 梯形图)\n连接请求: SYN=1, seq=300\n接受请求: SYN=1, ACK=1, seq=200, ack= (1)\n发送确认: SYN=0, seq= (3), ack= (4)\n发送数据: seq=201, ack=301, DATA -> ...\n释放连接请求: FIN= (5), seq=601 -> ...",
+              "answer": "<strong>1. 填空：</strong>\n<ul><li><strong>(1) 301</strong>：确认客户端的 SYN (seq=300)，SYN 占一个序号。</li><li><strong>(3) 301</strong>：客户端发送的第三次握手，序号紧接在自己的 SYN 之后。</li><li><strong>(4) 201</strong>：确认服务器的 SYN (seq=200)。</li><li><strong>(5) 1</strong>：释放连接请求报文，FIN 标志位必须置为 1。</li></ul>\n<strong>2. TCP 释放连接过程描述 (四次挥手)：</strong>\n<ol><li><strong>H1 发送连接释放报文 (FIN=1)</strong>：主动关闭方 H1 停止发送数据，发送 FIN 报文，进入 FIN-WAIT-1 状态。</li><li><strong>H2 发送确认报文 (ACK)</strong>：被动关闭方 H2 收到 FIN 后发出确认，进入 CLOSE-WAIT 状态。此时 TCP 处于半关闭状态，H1 不发数据但可接收数据。</li><li><strong>H2 发送连接释放报文 (FIN=1)</strong>：当 H2 数据发送完毕后，发送 FIN 报文给 H1，进入 LAST-ACK 状态。</li><li><strong>H1 发送确认报文 (ACK)</strong>：H1 收到 FIN 后发送 ACK，进入 TIME-WAIT 状态。等待 2MSL 时间后，H1 彻底关闭连接。H2 收到 ACK 后立即关闭。</li></ol>"
+            },
+            {
+              "id": 3,
+              "question": "主机 A (IP: 10.0.0.1, MAC: AA...) 需要向主机 B (IP: 10.0.0.2, MAC: BB...) 发送一个 IP 数据包。它们位于同一个以太网中，且 A 的 ARP 缓存为空。请详细描述从主机 A 应用层发起请求到数据帧到达主机 B 数据链路层的完整通信过程。",
+              "answer": "<strong>详细通信过程如下：</strong>\n\n1.  <strong>应用层与传输层封装</strong>：\n    主机 A 的应用层产生数据，传输层添加 TCP/UDP 首部，传给网络层。\n\n2.  <strong>网络层封装 (IP)</strong>：\n    网络层将数据封装成 IP 数据报。源 IP 为 10.0.0.1，目的 IP 为 10.0.0.2。\n\n3.  <strong>ARP 缓存查询 (Link Layer)</strong>：\n    A 准备封装 MAC 帧，查询本地 ARP 缓存表，寻找 IP 10.0.0.2 对应的 MAC 地址。由于缓存为空，<strong>A 无法立即发送 IP 数据报</strong>，需先发起 ARP 流程。\n\n4.  <strong>发送 ARP 请求 (ARP Request)</strong>：\n    A 广播发送一个 ARP 请求报文。\n    - <strong>源 MAC</strong>: AA-AA-AA-AA-AA-AA\n    - <strong>目的 MAC</strong>: FF-FF-FF-FF-FF-FF (广播地址)\n    - <strong>内容</strong>: “我的 IP 是 10.0.0.1，MAC 是 AA...，谁是 10.0.0.2？请告诉我你的 MAC。”\n\n5.  <strong>交换机转发与广播</strong>：\n    同一局域网内的交换机接收到该广播帧，将其转发给除 A 以外的所有端口。\n\n6.  <strong>主机 B 处理 ARP 请求</strong>：\n    B 收到广播帧，检查包内的目的 IP (10.0.0.2) 与自己一致。\n    - B 将 A 的 IP 和 MAC 映射写入自己的 ARP 缓存。\n    - B 准备发送 ARP 响应。\n\n7.  <strong>发送 ARP 响应 (ARP Reply)</strong>：\n    B 单播发送 ARP 响应报文给 A。\n    - <strong>源 MAC</strong>: BB-BB-BB-BB-BB-BB\n    - <strong>目的 MAC</strong>: AA-AA-AA-AA-AA-AA\n    - <strong>内容</strong>: “我是 10.0.0.2，我的 MAC 是 BB...。”\n\n8.  <strong>主机 A 更新缓存并发送数据</strong>：\n    A 收到 ARP 响应，将 B 的 MAC 地址写入 ARP 缓存。\n    现在 A 可以封装之前暂存的 IP 数据报了。\n    - <strong>源 MAC</strong>: AA-AA-AA-AA-AA-AA\n    - <strong>目的 MAC</strong>: BB-BB-BB-BB-BB-BB\n    - <strong>以太网帧类型</strong>: 0x0800 (IP)\n\n9.  <strong>帧到达 B</strong>：\n    数据帧通过物理层传输到达主机 B 的数据链路层接口，B 确认目的 MAC 匹配，接收该帧并向上传递。"
+            }
+          ]
+        }
+      ]
+    };
+
+    // 渲染函数 (修复了 ID 冲突 bug)
+    function renderExam() {
+        const app = document.getElementById('app');
+        const header = document.createElement('header');
+        header.innerHTML = `<h1>${examData.examTitle}</h1><p>点击题目下方的按钮查看详细解析</p>`;
+        app.appendChild(header);
+
+        examData.sections.forEach((section, sectionIndex) => {
+            const sectionDiv = document.createElement('div');
+            sectionDiv.innerHTML = `<h2 class="section-title">${section.name}</h2>`;
+            
+            section.questions.forEach((q, qIndex) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                // 题目内容
+                let contentHTML = `<div class="question-text">${qIndex + 1}. ${q.question}</div>`;
+                
+                // 如果是选择题，渲染选项
+                if (section.type === 'choice') {
+                    contentHTML += `<ul class="options-list">`;
+                    q.options.forEach(opt => {
+                        contentHTML += `<li>${opt}</li>`;
+                    });
+                    contentHTML += `</ul>`;
+                }
+
+                // 生成唯一的 ID：sectionIndex-questionIndex
+                const uniqueId = `ans-${sectionIndex}-${qIndex}`;
+
+                contentHTML += `
+                    <button class="btn-toggle" onclick="toggleAnswer('${uniqueId}')">显示答案与解析</button>
+                    <div id="${uniqueId}" class="answer-box">
+                        <div class="answer-label">【参考答案】</div>
+                        <div class="explanation">${q.answer}</div>
+                        ${q.explanation ? `<div style="margin-top:15px; border-top:1px dashed #bef264; padding-top:10px;"><strong>解析补充：</strong><br>${q.explanation}</div>` : ''}
+                    </div>
+                `;
+
+                card.innerHTML = contentHTML;
+                sectionDiv.appendChild(card);
+            });
+
+            app.appendChild(sectionDiv);
+        });
+    }
+
+    // 切换答案显示
+    window.toggleAnswer = function(id) {
+        const el = document.getElementById(id);
+        const btn = el.previousElementSibling;
+        
+        if (el.classList.contains('visible')) {
+            el.classList.remove('visible');
+            btn.textContent = '显示答案与解析';
+            btn.style.backgroundColor = 'var(--accent-color)';
+        } else {
+            el.classList.add('visible');
+            btn.textContent = '隐藏答案';
+            btn.style.backgroundColor = '#95a5a6'; // 灰色
+        }
+    }
+
+    // 初始化
+    renderExam();
+</script>
+
+</body>
+</html>
